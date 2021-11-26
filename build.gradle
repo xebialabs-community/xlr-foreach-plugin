@@ -21,9 +21,9 @@ if (!project.hasProperty('release.scope')) {
   project.ext['release.scope'] = 'patch'
 }
 
-if (!project.hasProperty('release.useLastTag')) {
-  project.ext['release.useLastTag'] = true
-}
+//if (!project.hasProperty('release.useLastTag')) {
+//  project.ext['release.useLastTag'] = true
+//}
 
 sourceSets.main.resources.srcDirs = ["src/main/jython", "src/main/resources"]
 
