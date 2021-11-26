@@ -8,26 +8,36 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
+
 def getTaskPosition(task):
+    """Gets the current position of the task in its container (phase or group task)"""
     index = 1
     for t in task.container.tasks:
         if task.id == t.id:
             return index
         index += 1
 
+# Remember starting point of the task in the container
 position = getTaskPosition(task)
 
 def addTaskToChangeVariable(value):
+    """Inserts a task with a little script to change the value of the looping variable"""
     scriptTask = taskApi.newTask("xlrelease.ScriptTask")
     scriptTask.script = "releaseVariables['{}'] = '{}'".format(variable, value)
     scriptTask.title = "Set {} to {}".format(variable, value)
     scriptTask = phaseApi.addTask(task.container.id, scriptTask, position)
     taskApi.lockTask(scriptTask.id)
 
+
 first = True
+
+# Create a task for each value in the list
 for value in values:
+
+    # Create a task to change the looping variable
     addTaskToChangeVariable(value)
 
+    # Clone the first task for subsequent invocations
     if not first:
         task = getCurrentTask()
         copy = taskApi.copyTask(task.container.tasks[position - 1].id, task.container.id, position + 1)
@@ -35,4 +45,5 @@ for value in values:
         taskApi.updateTask(copy)
     else:
         first = False
+
     position += 2
