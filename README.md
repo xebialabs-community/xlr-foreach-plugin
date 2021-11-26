@@ -8,7 +8,45 @@ The **Control > For each** task type execute the task that is right behind it in
 **Properties**
 
 * **Values** - The list of values to iterate over. This can refer to a release variable.
-* **Variable name** - The name of the looping variable (without `${...}` syntax) that will contain the current value while iterating.
+* **Variable name** - The name of the looping variable (without `${...}` syntax) that will contain the current value while iterating. Make sure to disable 'Required' and 'Show on Create Release form' for this variable.
+
+## As-code example
+
+Here's a Yaml example of a template using the For each task. Use the [`xl` command line utility](https://docs.xebialabs.com/v.10.3/release)  to upload it to release.
+
+```
+apiVersion: xl-release/v1
+kind: Templates
+metadata:
+  home: For each
+spec:
+- template: For each example
+
+  variables:
+  - type: xlrelease.StringVariable
+    key: friend
+    requiresValue: false
+    showOnReleaseStart: false
+    label: Friend Looping Variable
+
+  scriptUsername: admin
+  scriptUserPassword: admin
+
+  phases:
+  - phase: Simple example
+    tasks:
+    - name: For each friend
+      type: control.ForEach
+      values:
+      - Alice
+      - Bob
+      - Carol
+      variable: friend
+    - name: "Hello, ${friend}!"
+      type: xlrelease.ScriptTask
+    - name: All done
+      type: xlrelease.GateTask
+```
 
 
 
