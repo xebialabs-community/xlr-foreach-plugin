@@ -1,0 +1,12 @@
+<synthetic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.xebialabs.com/deployit/synthetic"
+           xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd">
+
+    <type type="control.ForEach" extends="xlrelease.PythonScript" label="Control flow: For each">
+        <property category="input" name="values" kind="list_of_string"
+                  description="The list of values to iterate over." />
+        <property category="input" name="variable" label="Variable name"
+                  description="The name of the variable (without ${...} syntax) that will be used to store the current value."/>
+    </type>
+
+</synthetic>
