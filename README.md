@@ -1,5 +1,5 @@
 # xlr-foreach-plugin
-Prototype for "for each" functionality in Release
+Prototype for "for each" functionality in Release. This code is for evaluation and educational purposes only.
 
 ## Instructions
 
